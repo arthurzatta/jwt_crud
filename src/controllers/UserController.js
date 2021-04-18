@@ -1,18 +1,18 @@
-import knex from '../connection';
+const knex = require('../connection');
 
 class User{
-    async create(req,res){
-        const { name, hashPassword } = req.body;
-        await knex('users').insert({
+    async create(req, res){
+        const { name, email, password } = req.body;
+        const user = await knex('users').insert({
             name,
-            hashPassword
+            email,
+            password
         });
-
-        return res.status(200).end();
+        return {id: user[0], name, email};
     }
 
     async list(req,res){
-        const query = await knex().select().table('users');
+        const query = await knex('users').select();
         return res.json(query);
     }
 
@@ -39,3 +39,5 @@ class User{
     }
 
 }
+
+module.exports = new User;
