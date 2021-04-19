@@ -38,6 +38,7 @@ class User{
         return res.status(200).end()
     }
 
+
 }
 
 module.exports = new User;
